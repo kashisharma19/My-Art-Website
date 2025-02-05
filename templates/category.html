@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category_name.replace('_', ' ').title() }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>{{ category_name.replace('_', ' ').title() }}</h1>
+        <nav>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            {% for product in products %}
+                <div class="product">
+                    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p><strong>{{ product.price }}</strong></p>
+                    <form action="/order" method="POST">
+                        <input type="hidden" name="product_name" value="{{ product.name }}">
+                        <input type="text" name="customer_name" placeholder="Your Name" required>
+                        <input type="email" name="customer_email" placeholder="Your Email" required>
+                        <button type="submit">Place Order</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 My Art Collection</p>
+    </footer>
+</body>
+</html>
